@@ -1,6 +1,5 @@
 
 const Part = (props) => {
-  console.log(props)
   return (
     <p>{props.part} {props.exercises}</p>
   )
@@ -13,7 +12,6 @@ const Header = (props) => {
 }
 
 const Content = (props) => {
-  console.log(props) 
   return (
     <div>
       <Part part={props.parts[0].name} exercises={props.parts[0].exercises} />
