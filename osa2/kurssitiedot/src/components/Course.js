@@ -12,7 +12,6 @@ const Part = ({part, exercises}) => {
   
   const Total = ({parts}) => {
     const total = Object.values(parts).reduce((t, {exercises}) => t + exercises, 0)
-    //console.log(total)
     return (
       <b> total of {total} exercises </b>
     )
