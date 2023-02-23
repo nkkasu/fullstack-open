@@ -74,7 +74,7 @@ app.post('/api/persons', (req, res) => {
     }
     body.id = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER)
     persons = persons.concat(body)
-    res.json(persons)
+    res.json(body)
 })
 
 const PORT = 3001
