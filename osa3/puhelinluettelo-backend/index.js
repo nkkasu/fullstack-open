@@ -5,6 +5,7 @@ const cors = require('cors')
 
 app.use(express.json())
 app.use(cors())
+app.use(express.static('build'))
 
 // https://www.digitalocean.com/community/tutorials/nodejs-getting-started-morgan
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :param'))
@@ -77,7 +78,7 @@ app.post('/api/persons', (req, res) => {
     res.json(body)
 })
 
-const PORT = 3001
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })

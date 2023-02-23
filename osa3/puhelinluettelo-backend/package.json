@@ -6,7 +6,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon inxex.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "build:ui": "rm -rf build && cd ../../osa2/puhelinluettelo/ && npm run build && cp -r build ../../osa3/puhelinluettelo-backend",
+    "deploy": "fly deploy",
+    "deploy:full": "npm run build:ui && npm run deploy",
+    "logs:prod": "fly logs"
   },
   "author": "",
   "license": "ISC",
