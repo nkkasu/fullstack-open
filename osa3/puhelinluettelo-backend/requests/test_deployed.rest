@@ -1,0 +1,7 @@
+POST https://quiet-snowflake-6233.fly.dev/api/persons
+Content-Type: application/json
+
+{
+    "name": "Arto Hellas",
+    "number": "045-12312345"
+}
