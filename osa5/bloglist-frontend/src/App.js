@@ -121,13 +121,13 @@ const App = () => {
 
       <h2>create new</h2>
 
-      <Togglable buttonLabel='new blog' ref={blogFormRef}>
+      <Togglable id='createblogbutton' buttonLabel='new blog' ref={blogFormRef}>
         <BlogForm
           handleCreateNewBlog={handleCreateNewBlog}
         />
       </Togglable>
       {blogs.sort((a, b) => {return b.likes - a.likes}).map(blog =>
-        <Blog key={blog.id} blog={blog} updateLike={updateLike} removeBlog={removeBlog}/>
+        <Blog key={blog.id} blog={blog} updateLike={updateLike} removeBlog={removeBlog} user={user}/>
       )}
     </div>
   )
