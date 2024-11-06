@@ -98,6 +98,10 @@ let books = [
 */
 
 const typeDefs = `
+  enum YesNo {
+    YES
+    NO
+  }
   type Author {
     name: String!
     id: ID!
@@ -108,22 +112,26 @@ const typeDefs = `
     title: String!
     published: Int!
     author: String!
-    genres: [String!]
+    genres: [String!]!
     id: ID!
   }
   type Query {
     bookCount: Int!
     authorCount: Int!
-    allBooks: [Book!]!
+    allBooks(author: String): [Book!]!
     allAuthors: [Author!]!
   }
 `
-
 const resolvers = {
   Query: {
     bookCount: () => books.length,
     authorCount: () => authors.length,
-    allBooks: () => books,
+    allBooks: (root, args) => {
+      if (!args.author) {
+        return books;
+      }
+      return books.filter(book => book.author === args.author)
+    },
     allAuthors: () => authors
   },
   Author: {
