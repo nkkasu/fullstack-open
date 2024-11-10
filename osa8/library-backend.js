@@ -144,7 +144,7 @@ const resolvers = {
       if (args.genre) {
         filteredBooks = books.filter(book => book.author === args.author)
       }
-      if (!args.author) {
+      if (args.author) {
         filteredBooks = books.filter(book => book.genres.includes(args.genre))
       }
       return filteredBooks;
