@@ -146,28 +146,50 @@ const resolvers = {
     addBook: async (root, args) => {
       let author = await Author.findOne({ name: args.author })
 
-      if (!author) {
-        author = new Author({ name: args.author })
-        await author.save();
-      }
+      try {
+        if (!author) {
+          author = new Author({ name: args.author })
+          await author.save();
+        }
 
-      const book = new Book({
-        title: args.title,
-        published: args.published,
-        author: author._id,
-        genres: args.genres,
-      })
-      await book.save();
-      return book.populate('author')
+        const book = new Book({
+          title: args.title,
+          published: args.published,
+          author: author._id,
+          genres: args.genres,
+        })
+        await book.save();
+        return book.populate('author')
+
+      } catch (error) {
+        throw new GraphQLError('Adding book failed', {
+          extensions:
+          {
+            code: 'BAD_USER_INPUT',
+            invalidArgs: args.name,
+            error
+          }
+        })
+      }
     },
     editAuthor: async (root, args) => {
-      const author = await Author.findOne({ name: args.name })
-
-      if (!author) {
-        return null
+      try {
+        const author = await Author.findOne({ name: args.name })
+        if (!author) {
+          return null
+        }
+        author.born = args.setBornTo
+        return author.save()
+      } catch (error) {
+        throw new GraphQLError('Editing author failed', {
+          extensions:
+          {
+            code: 'BAD_USER_INPUT',
+            invalidArgs: args.name,
+            error
+          }
+        })
       }
-      author.born = args.setBornTo
-      return author.save()
     }
   }
 }
