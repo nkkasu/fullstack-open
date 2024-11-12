@@ -38,22 +38,6 @@ let authors = [
     name: 'Sandi Metz', // birthyear not known
   },
 ]
-addAuthors = () => {
-  for (const authorData of authors) {
-    const author = new Author(authorData)
-    author.save().then(result => {
-      console.log("Author saved!")
-    })
-  }
-}
-addBooks = () => {
-  for (const bookData of books) {
-    const book = new Book(bookData)
-    book.save().then(result => {
-      console.log("Book saved!")
-    })
-  }
-}
 let books = [
   {
     title: 'Clean Code',
@@ -141,13 +125,21 @@ const resolvers = {
     bookCount: async () => Book.collection.countDocuments(),
     authorCount: async () => Author.collection.countDocuments(),
     allBooks: async (root, args) => {
-      return Book.find({});
+      let filter = {}
+
+      let books = Book.find({})
+
+      if (args.genre) {
+        filter.genres = { $in: [args.genre] };
+      }
+
+      return Book.find(filter).populate('author');
     },
     allAuthors: async () => Author.find({}),
   },
   Author: {
     bookCount: async (root) => {
-
+      return Book.countDocuments({ author: root._id })
     }
   },
   Mutation: {
